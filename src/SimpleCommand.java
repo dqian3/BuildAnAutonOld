@@ -10,6 +10,7 @@ public class SimpleCommand extends CommandBlock {
 	public SimpleCommand(JComponent com, Color p, Color s, Command c, String m) {
 		super(com, p, s, c);
 		message = m;
+		
 	}
 	
 	public void edit() {
