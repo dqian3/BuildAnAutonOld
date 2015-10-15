@@ -1,24 +1,16 @@
 import java.awt.event.*;
+
 import javax.swing.*;
+import javax.swing.event.MenuListener;
+
 import java.awt.*;
 import java.util.*;
 
-/**
- * The graphical interface used to build a series of user defined commands. Each command is
- * encapsulated by a <code>CommandBlock</code> object that defines it's position in the user interface.
- * When the "save" menuItem is selected, you will save it to a .dat file as an editable ArrayList of commandBlock objects.
- * These files can be opened using the "file" option.
- * When the "export" menuItem is selected, the program will export the ArrayList of commands to a .dat file.
- * 
- * 
- * @author Daniel Qian
- * @author Dominic Rubino
- * 
- */
-public class BuildAnAuton extends JFrame  {
+public class BuildAnAuton extends JFrame {
 	private ArrayList<CommandBlock> commands = new ArrayList<CommandBlock>();
 	
-	private JComponent workArea = new JComponent() {
+	//	private Rectangle b = new Rectangle(0, 0, 50, 50);
+	JComponent workArea = new JComponent() {
 		public void paintComponent(Graphics g) {
 			Graphics2D g2 = (Graphics2D) g;
 			for(CommandBlock c:commands) {
@@ -26,6 +18,10 @@ public class BuildAnAuton extends JFrame  {
 			}
 		}
 	};
+	
+	private JMenuBar menu = new JMenuBar();
+	private JMenu fileMenu = new JMenu("FIle");
+	private JMenuItem save = new JMenuItem("Save");
 	
 	private JPanel buttons = new JPanel();
 	private JButton add = new JButton("add");
@@ -45,6 +41,7 @@ public class BuildAnAuton extends JFrame  {
 
 
 			public void actionPerformed(ActionEvent e) {
+				commands.add(new SimpleCommand(new Rectangle(0, 0, 120, 140), Color.BLUE, Color.RED, "Hello World"));
 				
 			}
 			
@@ -126,25 +123,23 @@ public class BuildAnAuton extends JFrame  {
 			}
 		});
 		
+		//save.addActionListener(new MenuListener(this));
+		
+		menu.add(fileMenu);
+		fileMenu.add(save);
+		add(menu);
+		
 		add(buttons, BorderLayout.SOUTH);
 		add(workArea, BorderLayout.CENTER);
 		t.start();
 	}
 
-	//getters
-	public ArrayList<CommandBlock> getCommands() {
-		return commands;
-	}
-	
-	
-	
-	
-	
-	
 	public static void main(String[] args) {
 		BuildAnAuton x = new BuildAnAuton();
 		x.setSize(500, 500);
 		x.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		x.setVisible(true);
 	}
+	
+	
 }

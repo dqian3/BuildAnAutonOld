@@ -1,16 +1,15 @@
-
 import java.awt.*;
- 
 import javax.swing.*;
-
-
 public class SimpleCommand extends CommandBlock {
     private String message;
     
-	public SimpleCommand(JComponent com, Color p, Color s, Command c, String m) {
-		super(com, p, s, c);
+	public SimpleCommand(Rectangle r, Color p, Color s, String m) {
+		super(r, p, s);
 		message = m;
-		
+	}
+	
+	public void execute() {
+		System.out.println(message);
 	}
 	
 	public void edit() {
@@ -24,4 +23,4 @@ public class SimpleCommand extends CommandBlock {
 		execute();
 	}
 }
-
+	
