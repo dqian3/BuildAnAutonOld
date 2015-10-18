@@ -1,8 +1,6 @@
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.event.MenuListener;
-
 import java.awt.*;
 import java.util.*;
 
@@ -41,7 +39,7 @@ public class BuildAnAuton extends JFrame {
 
 
 			public void actionPerformed(ActionEvent e) {
-				commands.add(new SimpleCommand(new Rectangle(0, 0, 120, 140), Color.BLUE, Color.RED, "Hello World"));
+				commands.add(new SimpleCommand(workArea, Color.BLUE, Color.RED, "Hello World"));
 				
 			}
 			

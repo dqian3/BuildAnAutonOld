@@ -3,8 +3,8 @@ import javax.swing.*;
 public class SimpleCommand extends CommandBlock {
     private String message;
     
-	public SimpleCommand(Rectangle r, Color p, Color s, String m) {
-		super(r, p, s);
+	public SimpleCommand(JComponent parent, Color p, Color s, String m) {
+		super(parent, p, s);
 		message = m;
 	}
 	
