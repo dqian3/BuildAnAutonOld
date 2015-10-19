@@ -93,12 +93,12 @@ public abstract class CommandBlock {
 	public Rectangle getEditPortion() {
 		return new Rectangle(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100);
 	}
-	public Rectangle getStrtPortion() {
-		return new Rectangle(hitbox.x, hitbox.y + 120, WIDTH/2, 20);
-	}
-	public Rectangle getEndPortion() {
-		return new Rectangle(hitbox.x + 60, hitbox.y + 120, WIDTH/2, 20);
-	}
+//	public Rectangle getStrtPortion() {
+//		return new Rectangle(hitbox.x, hitbox.y + 120, WIDTH/2, 20);
+//	}
+//	public Rectangle getEndPortion() {
+//		return new Rectangle(hitbox.x + 60, hitbox.y + 120, WIDTH/2, 20);
+//	}
 
 	
 	
@@ -114,8 +114,8 @@ public abstract class CommandBlock {
 		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y, WIDTH, 20, 8, 8));
 		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y + 20, WIDTH/2, 100, 8, 8)); 
 		g.draw(new RoundRectangle2D.Double(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100, 8, 8));
-		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y + 120, WIDTH/4, 20, 8, 8));
-		g.draw(new RoundRectangle2D.Double(hitbox.x + 90, hitbox.y + 120, WIDTH/4, 20, 8, 8));
+//		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y + 120, WIDTH/4, 20, 8, 8));
+//		g.draw(new RoundRectangle2D.Double(hitbox.x + 90, hitbox.y + 120, WIDTH/4, 20, 8, 8));
 		
 	}
 	
