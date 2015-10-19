@@ -1,6 +1,8 @@
 import java.awt.event.*;
+import java.awt.geom.Line2D;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.*;
 
@@ -10,9 +12,12 @@ public class BuildAnAuton extends JFrame {
 	JComponent workArea = new JComponent() {
 		public void paintComponent(Graphics g) {
 			Graphics2D g2 = (Graphics2D) g;
+			g2.draw(new Line2D.Double(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2));
+
 			for(CommandBlock c:commands) {
 				c.paint(g2);
 			}
+
 		}
 	};
 	

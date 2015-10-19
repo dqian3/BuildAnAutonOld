@@ -106,12 +106,7 @@ public abstract class CommandBlock {
 	public Rectangle getEditPortion() {
 		return new Rectangle(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100);
 	}
-//	public Rectangle getStrtPortion() {
-//		return new Rectangle(hitbox.x, hitbox.y + 120, WIDTH/2, 20);
-//	}
-//	public Rectangle getEndPortion() {
-//		return new Rectangle(hitbox.x + 60, hitbox.y + 120, WIDTH/2, 20);
-//	}
+
 
 	
 	
@@ -120,15 +115,17 @@ public abstract class CommandBlock {
 	 * @param g
 	 */
 	public void paint(Graphics2D g) {
+		g.setColor(primCol);
+		g.fill(new RoundRectangle2D.Double(hitbox.x, hitbox.y, WIDTH, 20, 8, 8));
+		g.fill(new RoundRectangle2D.Double(hitbox.x, hitbox.y + 20, WIDTH/2, 100, 8, 8)); 
+		g.fill(new RoundRectangle2D.Double(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100, 8, 8));
+		
+		g.setColor(secCol);
 		g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		g.drawString(this.getClass().getName(), hitbox.x + 2, hitbox.y + 18);
-		
-		
 		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y, WIDTH, 20, 8, 8));
 		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y + 20, WIDTH/2, 100, 8, 8)); 
 		g.draw(new RoundRectangle2D.Double(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100, 8, 8));
-//		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y + 120, WIDTH/4, 20, 8, 8));
-//		g.draw(new RoundRectangle2D.Double(hitbox.x + 90, hitbox.y + 120, WIDTH/4, 20, 8, 8));
 		
 	}
 	
