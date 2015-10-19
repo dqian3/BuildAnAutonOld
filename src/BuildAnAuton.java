@@ -7,7 +7,6 @@ import java.util.*;
 public class BuildAnAuton extends JFrame {
 	private ArrayList<CommandBlock> commands = new ArrayList<CommandBlock>();
 	
-	//	private Rectangle b = new Rectangle(0, 0, 50, 50);
 	JComponent workArea = new JComponent() {
 		public void paintComponent(Graphics g) {
 			Graphics2D g2 = (Graphics2D) g;
