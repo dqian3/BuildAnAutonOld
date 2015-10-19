@@ -18,6 +18,8 @@ public abstract class CommandBlock {
 	private Color primCol;
 	private Color secCol;
 	private JComponent parent;
+	protected Command command; 
+
 	
 	public final int WIDTH = 120; //Width of the total shape
 	public  final int HEIGHT = 140; //Height of the total shape
@@ -58,9 +60,18 @@ public abstract class CommandBlock {
 	 * in order to save space when writing to a file. Also ensures
 	 * no NullPointerException is thrown
 	 */
-	public abstract void edit();
-	public abstract void execute();
-	public abstract void viewInfo();
+	public void edit() {
+		if(command != null)
+			command.edit();
+	}
+	public void execute() {
+		if(command != null)
+			command.execute();
+	}
+	public void viewInfo() {
+		if(command != null)
+			command.viewInfo();
+	}
 	
 	
 	//Getters
@@ -73,7 +84,9 @@ public abstract class CommandBlock {
 	public Color getSecondary() {
 		return secCol;
 	}
-	
+	public Command getCommand() {
+		return command;
+	}
 	
 	//Setters
 	public void setX(int x) {

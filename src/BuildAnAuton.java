@@ -48,33 +48,16 @@ public class BuildAnAuton extends JFrame {
 		workArea.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				for(int i = commands.size() - 1; i >= 0; i--) {
-					Rectangle r = commands.get(i).getHitBox();
-					if(r.contains(e.getPoint())) {
-						if(e.getPoint().y < r.y + 20) {
-						}
-						else if(e.getPoint().y > r.y + 120) {
-							
-						}
-						else {
-							if(e.getPoint().x > r.x + 60) {
-								commands.get(i).edit();
-							}
-							else {
-								commands.get(i).execute();
-							}
-						}
-						break;
-						
-						
-						/*
-						r.x -= 5;
-						r.y -= 5;
-						
-						r.height += 10;
-						r.width  += 10;
-						
-						*/
+
+					if(commands.get(i).getEditPortion().contains(e.getPoint())) {
+						commands.get(i).edit();
 					}
+					if(commands.get(i).getViewPortion().contains(e.getPoint())) {
+						commands.get(i).execute();
+					}
+				
+					break;
+					
 				}
 			}
 			public void mouseEntered(MouseEvent e) {
@@ -90,14 +73,12 @@ public class BuildAnAuton extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				
 				for(int i = commands.size() - 1; i >= 0; i--) {
-					Rectangle r = commands.get(i).getHitBox();
+					Rectangle r = commands.get(i).getDragPortion();
 					if(r.contains(e.getPoint())) {
-						if(e.getPoint().y < r.y + 20) {
-							focus = i;
-							xOffset = e.getX() - r.x;
-							yOffset = e.getY() - r.y;
-							break;
-						}
+						focus = i;
+						xOffset = e.getX() - r.x;
+						yOffset = e.getY() - r.y;
+						break;
 					}
 				}
 			}
