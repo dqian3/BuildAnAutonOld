@@ -106,9 +106,6 @@ public abstract class CommandBlock {
 	public Rectangle getEditPortion() {
 		return new Rectangle(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100);
 	}
-
-
-	
 	
 	/**
 	 * Draws the command block on the passed graphics
