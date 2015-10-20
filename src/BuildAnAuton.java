@@ -13,7 +13,6 @@ public class BuildAnAuton extends JFrame {
 		public void paintComponent(Graphics g) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.draw(new Line2D.Double(0, this.getHeight()/2, this.getWidth(), this.getHeight()/2));
-
 			for(CommandBlock c:commands) {
 				c.paint(g2);
 			}
@@ -32,6 +31,8 @@ public class BuildAnAuton extends JFrame {
 	private int yOffset;
 	private int focus = -1;
 	
+	private int snapGap = 30;
+	
 	public BuildAnAuton() {
 		
 		setLayout(new BorderLayout());
@@ -43,7 +44,7 @@ public class BuildAnAuton extends JFrame {
 
 
 			public void actionPerformed(ActionEvent e) {
-				commands.add(new SimpleCommand(workArea, Color.BLUE, Color.RED, "Hello World"));
+				commands.add(new SimpleCommand(workArea, Color.WHITE, Color.BLACK, "Hello World"));
 				
 			}
 			
@@ -71,14 +72,21 @@ public class BuildAnAuton extends JFrame {
 				
 			}
 			public void mouseReleased(MouseEvent e) {
-
+				int temp = focus;
 				focus = -1;
+				if(Math.abs(commands.get(temp).getHitBox().y + 60 - workArea.getHeight()/2) < snapGap){
+					System.out.println("ASDFASDFASDFDSFFASD");
+
+					commands.get(temp).setY(workArea.getHeight()/2 - 60);
+					commands.get(temp).snap();
+				}
 			}
 			public void mousePressed(MouseEvent e) {
 				
 				for(int i = commands.size() - 1; i >= 0; i--) {
 					Rectangle r = commands.get(i).getDragPortion();
 					if(r.contains(e.getPoint())) {
+						commands.get(i).unsnap();
 						focus = i;
 						xOffset = e.getX() - r.x;
 						yOffset = e.getY() - r.y;
@@ -95,12 +103,13 @@ public class BuildAnAuton extends JFrame {
 					workArea.repaint();	
 					
 					if(focus != -1) {
-						try{
+											
+					try{
 						commands.get(focus).setX(workArea.getMousePosition().x - xOffset);
 						commands.get(focus).setY(workArea.getMousePosition().y - yOffset);
-						}
-						catch(Exception e){}
-							
+					}
+					catch(Exception e){}
+					
 					}
 				}
 			}
@@ -124,5 +133,10 @@ public class BuildAnAuton extends JFrame {
 		x.setVisible(true);
 	}
 	
+	public void swap(int a, int b) {
+		CommandBlock temp = commands.get(a);
+		commands.set(a, commands.get(b));
+		commands.set(b, temp);
+	}
 	
 }

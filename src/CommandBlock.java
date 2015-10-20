@@ -15,14 +15,16 @@ import javax.swing.JComponent;
  */
 public abstract class CommandBlock {
 	private Rectangle hitbox; //Rectangle the contains all portions of the command block
-	private Color primCol;
-	private Color secCol;
-	private JComponent parent;
-	protected Command command; 
+	private Color primCol; //Background Color
+	private Color secCol; //Text and Outline Color
+	private JComponent parent; 
+	protected Command command; //What it will do.
+	
+	private boolean snapped = false;
 
 	
 	public final int WIDTH = 120; //Width of the total shape
-	public  final int HEIGHT = 140; //Height of the total shape
+	public  final int HEIGHT = 120; //Height of the total shape
 	
 
 	/**
@@ -98,14 +100,25 @@ public abstract class CommandBlock {
 
 	//Returns the portions of the Rectangles that should implement unique actions when clicked on.
 	public Rectangle getDragPortion() {
-		return new Rectangle(hitbox.x, hitbox.y, WIDTH, 20);
+		return new Rectangle(hitbox.x, hitbox.y, WIDTH, HEIGHT/6);
 	}
 	public Rectangle getViewPortion() {
-		return new Rectangle(hitbox.x, hitbox.y + 20, WIDTH/2, 100);
+		return new Rectangle(hitbox.x, hitbox.y + HEIGHT/6, WIDTH/2, HEIGHT * 5/6);
 	}
 	public Rectangle getEditPortion() {
-		return new Rectangle(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100);
+		return new Rectangle(hitbox.x + WIDTH/2, hitbox.y + HEIGHT/6, WIDTH/2, HEIGHT * 5/6);
 	}
+	
+	public void snap() {
+		snapped = true;
+	}
+	public void unsnap() {
+		snapped = false;
+	}
+	public boolean isSnapped() {
+		return snapped;
+	}
+	
 	
 	/**
 	 * Draws the command block on the passed graphics
@@ -113,16 +126,16 @@ public abstract class CommandBlock {
 	 */
 	public void paint(Graphics2D g) {
 		g.setColor(primCol);
-		g.fill(new RoundRectangle2D.Double(hitbox.x, hitbox.y, WIDTH, 20, 8, 8));
-		g.fill(new RoundRectangle2D.Double(hitbox.x, hitbox.y + 20, WIDTH/2, 100, 8, 8)); 
-		g.fill(new RoundRectangle2D.Double(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100, 8, 8));
+		g.fill(new RoundRectangle2D.Double(hitbox.x, hitbox.y, WIDTH, HEIGHT/6, 8, 8));
+		g.fill(new RoundRectangle2D.Double(hitbox.x, hitbox.y + HEIGHT/6, WIDTH/2, HEIGHT * 5/6, 8, 8)); 
+		g.fill(new RoundRectangle2D.Double(hitbox.x + WIDTH/2, hitbox.y + HEIGHT/6, WIDTH/2, HEIGHT * 5/6, 8, 8));
 		
 		g.setColor(secCol);
 		g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
 		g.drawString(this.getClass().getName(), hitbox.x + 2, hitbox.y + 18);
-		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y, WIDTH, 20, 8, 8));
-		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y + 20, WIDTH/2, 100, 8, 8)); 
-		g.draw(new RoundRectangle2D.Double(hitbox.x + 60, hitbox.y + 20, WIDTH/2, 100, 8, 8));
+		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y, WIDTH, HEIGHT/6, 8, 8));
+		g.draw(new RoundRectangle2D.Double(hitbox.x, hitbox.y + HEIGHT/6, WIDTH/2, HEIGHT * 5/6, 8, 8)); 
+		g.draw(new RoundRectangle2D.Double(hitbox.x + WIDTH/2, hitbox.y + HEIGHT/6, WIDTH/2, HEIGHT * 5/6, 8, 8));
 		
 	}
 	
