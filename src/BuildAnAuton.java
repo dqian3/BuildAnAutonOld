@@ -25,6 +25,7 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 			}
 		}
 	};
+	
 	private JScrollPane workAreaPane = new JScrollPane(workArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	
 	private JMenuBar menu = new JMenuBar();
@@ -34,7 +35,8 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 	private JMenuItem export = new JMenuItem("Export");
 	private JMenu helpMenu = new JMenu("Help");
 	private JMenuItem help = new JMenu("Help");
-	
+	JFileChooser fs = new JFileChooser();
+
 	
 	private JPanel buttons = new JPanel();
 	private JButton add = new JButton("add");
@@ -55,7 +57,7 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 		add.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				commands.add(new CommandBlock(workArea, new SimpleCommand("Hello World"), Color.WHITE, Color.BLACK));
+				commands.add(new CommandBlock(new SimpleCommand("Hello World"), Color.WHITE, Color.BLACK));
 				
 			}
 			
@@ -161,6 +163,8 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 		x.setSize(500, 500);
 		x.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		x.setVisible(true);
+		x.open(new File(args[0]));
+
 	}
 	
 	public void place(int f) {
@@ -178,14 +182,28 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 		}
 	}
 
-	
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == save) {
-			try {
-			JFileChooser fs = new JFileChooser();
 			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 				File f = fs.getSelectedFile();
+				save(f);
+			}
+		}
+		if(e.getSource() == load) {
+			if(fs.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				File f = fs.getSelectedFile();
+				open(f);
+			}
+			
+		}
+		if(e.getSource() == export) {
+		}
+	}
+	
+	public void save(File f) {
+		try {
+			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream (f));
 				oos.writeObject(commands);
 				oos.close();
@@ -194,21 +212,29 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 			catch(IOException exc) {
 				exc.printStackTrace();
 			}
-		}
-		if(e.getSource() == load) {
-			try {
-			JFileChooser fs = new JFileChooser();
-			if(fs.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				File f = fs.getSelectedFile();
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-				commands = (ArrayList<CommandBlock>) ois.readObject();
-				System.out.println(commands.size());
-				ois.close();
-			}
-			}
-			catch(IOException exc){exc.printStackTrace();}
-			catch(ClassNotFoundException exc) {System.out.println("Error 2");}
-		}
 	}
-	
+	public void open(File f) {
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+			commands = (ArrayList<CommandBlock>) ois.readObject();
+			System.out.println(commands.size());
+			ois.close();
+		}
+		catch(IOException exc){exc.printStackTrace();}
+		catch(ClassNotFoundException exc) {System.out.println("Error 2");}
+	}
+	public void export(File f) {
+		ArrayList<CommandBlock> program = new ArrayList<CommandBlock>();
+		for(CommandBlock c: commands) {
+			if(c.isSnapped())
+				program.add(c);
+		}
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream (f));
+			oos.writeObject(program);
+			oos.close();
+		}
+		catch(IOException exc){exc.printStackTrace();}
+
+	}
 }

@@ -18,7 +18,6 @@ public class CommandBlock implements Serializable{
 	private Rectangle hitbox; //Rectangle the contains all portions of the command block
 	private Color primCol; //Background Color
 	private Color secCol; //Text and Outline Color
-	private JComponent parent; 
 	protected Command command; //What it will do.
 	
 	private boolean snapped = false;
@@ -35,8 +34,7 @@ public class CommandBlock implements Serializable{
 	 * @param primary		Primary color of the commandBlock, or background color
 	 * @param secondary		Secondary color, or text and outline color
 	 */
-	public CommandBlock(JComponent parent, Command c, Color primary, Color secondary) {
-		this.parent = parent;
+	public CommandBlock(Command c, Color primary, Color secondary) {
 		command = c;
 		primCol = primary;
 		secCol = secondary;
@@ -53,8 +51,7 @@ public class CommandBlock implements Serializable{
 	 * @param primary		Primary color of the commandBlock, or background color
 	 * @param secondary		Secondary color, or text and outline color
 	 */
-	public CommandBlock(JComponent parent, Command c, int x, int y, Color primary, Color secondary) {
-		this.parent = parent;
+	public CommandBlock(Command c, int x, int y, Color primary, Color secondary) {
 		command = c;
 		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
 		primCol = primary;
