@@ -164,7 +164,7 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 		x.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		x.setVisible(true);
 		x.open(new File(args[0]));
-
+		System.out.println(args[0]);
 	}
 	
 	public void place(int f) {
@@ -203,21 +203,18 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 	
 	public void save(File f) {
 		try {
-			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream (f));
-				oos.writeObject(commands);
-				oos.close();
-			}
-			}
-			catch(IOException exc) {
-				exc.printStackTrace();
-			}
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream (f));
+			oos.writeObject(commands);
+			oos.close();
+		}
+		catch(IOException exc) {
+			exc.printStackTrace();
+		}
 	}
 	public void open(File f) {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 			commands = (ArrayList<CommandBlock>) ois.readObject();
-			System.out.println(commands.size());
 			ois.close();
 		}
 		catch(IOException exc){exc.printStackTrace();}
