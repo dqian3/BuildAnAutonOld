@@ -82,6 +82,7 @@ public class BuildAnAuton extends JFrame {
 				if(commands.get(temp).getHitBox().x < 0){
 					commands.get(temp).setX(0);
 				}
+				place(temp);
 			}
 			public void mousePressed(MouseEvent e) {
 				
@@ -140,11 +141,22 @@ public class BuildAnAuton extends JFrame {
 		x.setVisible(true);
 	}
 	
-	public void swap(int f) {
-		
+	public void place(int f) {
+		if(f != -1) {
+			CommandBlock temp = commands.get(f);
+			int xtoswap = temp.getHitBox().x;
+			int indexToPlace = 0;
+			commands.remove(temp);
+			for (int i = 0; i < commands.size(); i++) {
+				if(xtoswap > commands.get(i).getHitBox().x) {
+					indexToPlace += 1;
+				}
+			}
+			commands.add(indexToPlace, temp);
+		}
 	}
 	
-	public void place(int a, int b) {
+	public void swap(int a, int b) {
 		CommandBlock temp = commands.get(a);
 		commands.set(a, commands.get(b));
 		commands.set(b, temp);
