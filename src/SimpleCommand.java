@@ -1,32 +1,30 @@
 import java.awt.*;
-
+import java.io.Serializable;
 import javax.swing.*;
-public class SimpleCommand extends CommandBlock {
+
+public class SimpleCommand implements Command, Serializable {
     private String message;
-	
-	public SimpleCommand(JComponent parent, Color p, Color s, String m) {
-		super(parent, p, s);
-		message = m;
-		
-		super.command = new Command() {
-			public void execute() {
-				System.out.println(message);
+			
+    public SimpleCommand(String msg) {
+    	message = msg;
+    }
+    
+	public void execute() {
+		System.out.println(message);
 
-			}
-
-			public void edit() {
-				String temp;
-				temp = JOptionPane.showInputDialog(null, "Message:");
-				if(temp != null) {
-					message = temp;
-				}
-			}
-
-			public void viewInfo() {
-				execute();
-			}
-		};
 	}
 
-}
+	public void edit() {
+		String temp;
+		temp = JOptionPane.showInputDialog(null, "Message:");
+		if(temp != null) {
+			message = temp;
+		}
+	}
+
+	public void viewInfo() {
+		execute();
+	}
 	
+
+}

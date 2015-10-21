@@ -1,11 +1,12 @@
 import java.awt.*;
 import java.awt.geom.*;
+import java.io.Serializable;
 
 import javax.swing.JComponent;
 
 /**
- * CommandBlock is the abstract class representing the "blocks" in the 
- * Auton builder. It contains the necessary information to display the positon
+ * CommandBlock is the class representing the "blocks" in the 
+ * Auton builder. It contains the necessary information to display the position
  * of the Command.
  * 
  * @author Daniel Qian
@@ -13,7 +14,7 @@ import javax.swing.JComponent;
  * @version 1.0
  * 
  */
-public abstract class CommandBlock {
+public class CommandBlock implements Serializable{
 	private Rectangle hitbox; //Rectangle the contains all portions of the command block
 	private Color primCol; //Background Color
 	private Color secCol; //Text and Outline Color
@@ -34,8 +35,9 @@ public abstract class CommandBlock {
 	 * @param primary		Primary color of the commandBlock, or background color
 	 * @param secondary		Secondary color, or text and outline color
 	 */
-	public CommandBlock(JComponent parent, Color primary, Color secondary) {
+	public CommandBlock(JComponent parent, Command c, Color primary, Color secondary) {
 		this.parent = parent;
+		command = c;
 		primCol = primary;
 		secCol = secondary;
 		hitbox = new Rectangle(0, 0, WIDTH, HEIGHT);
@@ -45,13 +47,15 @@ public abstract class CommandBlock {
 	 * Creates a <code>CommandBlock</code> object at a specified x and y;
 	 * 
 	 * @param parent		Parent component for the CommandBlock to be displayed in
+	 * @param c				Command
 	 * @param x
 	 * @param y
 	 * @param primary		Primary color of the commandBlock, or background color
 	 * @param secondary		Secondary color, or text and outline color
 	 */
-	public CommandBlock(JComponent parent, int x, int y, Color primary, Color secondary) {
+	public CommandBlock(JComponent parent, Command c, int x, int y, Color primary, Color secondary) {
 		this.parent = parent;
+		command = c;
 		hitbox = new Rectangle(x, y, WIDTH, HEIGHT);
 		primCol = primary;
 		secCol = secondary;

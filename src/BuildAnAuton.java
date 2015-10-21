@@ -4,9 +4,15 @@ import java.awt.geom.Line2D;
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
-public class BuildAnAuton extends JFrame {
+public class BuildAnAuton extends JFrame implements ActionListener {
 	private ArrayList<CommandBlock> commands = new ArrayList<CommandBlock>();
 	
 	JComponent workArea = new JComponent() {
@@ -22,8 +28,13 @@ public class BuildAnAuton extends JFrame {
 	private JScrollPane workAreaPane = new JScrollPane(workArea, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	
 	private JMenuBar menu = new JMenuBar();
-	private JMenu fileMenu = new JMenu("FIle");
+	private JMenu fileMenu = new JMenu("File");
 	private JMenuItem save = new JMenuItem("Save");
+	private JMenuItem load = new JMenuItem("Load");
+	private JMenuItem export = new JMenuItem("Export");
+	private JMenu helpMenu = new JMenu("Help");
+	private JMenuItem help = new JMenu("Help");
+	
 	
 	private JPanel buttons = new JPanel();
 	private JButton add = new JButton("add");
@@ -44,7 +55,7 @@ public class BuildAnAuton extends JFrame {
 		add.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				commands.add(new SimpleCommand(workArea, Color.WHITE, Color.BLACK, "Hello World"));
+				commands.add(new CommandBlock(workArea, new SimpleCommand("Hello World"), Color.WHITE, Color.BLACK));
 				
 			}
 			
@@ -53,17 +64,17 @@ public class BuildAnAuton extends JFrame {
 		workArea.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				for(int i = commands.size() - 1; i >= 0; i--) {
-
 					if(commands.get(i).getEditPortion().contains(e.getPoint())) {
 						commands.get(i).edit();
+						return;
 					}
 					if(commands.get(i).getViewPortion().contains(e.getPoint())) {
 						commands.get(i).execute();
+						return;
 					}
 				
-					break;
-					
 				}
+				
 			}
 			public void mouseEntered(MouseEvent e) {
 				
@@ -72,6 +83,7 @@ public class BuildAnAuton extends JFrame {
 				
 			}
 			public void mouseReleased(MouseEvent e) {
+				if(focus != -1) {
 				int temp = focus;
 				focus = -1;
 				if(Math.abs(commands.get(temp).getHitBox().y + 60 - workArea.getHeight()/2) < snapGap){
@@ -83,6 +95,7 @@ public class BuildAnAuton extends JFrame {
 					commands.get(temp).setX(0);
 				}
 				place(temp);
+				}
 			}
 			public void mousePressed(MouseEvent e) {
 				
@@ -123,9 +136,18 @@ public class BuildAnAuton extends JFrame {
 		});
 		
 		
+		
 		menu.add(fileMenu);
 		fileMenu.add(save);
-		add(menu);
+		fileMenu.add(load);
+		fileMenu.add(export);
+		menu.add(helpMenu);
+		helpMenu.add(help);
+		add(menu, BorderLayout.NORTH);
+	
+		save.addActionListener(this);
+		load.addActionListener(this);
+		export.addActionListener(this);
 		
 		add(buttons, BorderLayout.SOUTH);
 		add(workArea, BorderLayout.CENTER);
@@ -155,11 +177,38 @@ public class BuildAnAuton extends JFrame {
 			commands.add(indexToPlace, temp);
 		}
 	}
+
 	
-	public void swap(int a, int b) {
-		CommandBlock temp = commands.get(a);
-		commands.set(a, commands.get(b));
-		commands.set(b, temp);
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == save) {
+			try {
+			JFileChooser fs = new JFileChooser();
+			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+				File f = fs.getSelectedFile();
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream (f));
+				oos.writeObject(commands);
+				oos.close();
+			}
+			}
+			catch(IOException exc) {
+				exc.printStackTrace();
+			}
+		}
+		if(e.getSource() == load) {
+			try {
+			JFileChooser fs = new JFileChooser();
+			if(fs.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				File f = fs.getSelectedFile();
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+				commands = (ArrayList<CommandBlock>) ois.readObject();
+				System.out.println(commands.size());
+				ois.close();
+			}
+			}
+			catch(IOException exc){exc.printStackTrace();}
+			catch(ClassNotFoundException exc) {System.out.println("Error 2");}
+		}
 	}
 	
 }
