@@ -2,6 +2,7 @@ import java.awt.event.*;
 import java.awt.geom.Line2D;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 
 import java.awt.*;
 import java.io.File;
@@ -185,8 +186,7 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == save) {
-			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-				File f = fs.getSelectedFile();
+			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {				File f = fs.getSelectedFile();
 				save(f);
 			}
 		}
