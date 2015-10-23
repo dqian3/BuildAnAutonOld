@@ -2,7 +2,7 @@ import java.awt.*;
 import java.io.Serializable;
 import javax.swing.*;
 
-public class SimpleCommand implements Command, Serializable {
+public class SimpleCommand implements Command {
     private String message;
 			
     public SimpleCommand(String msg) {

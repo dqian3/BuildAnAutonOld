@@ -186,7 +186,8 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == save) {
-			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {				File f = fs.getSelectedFile();
+			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {				
+				File f = fs.getSelectedFile();
 				save(f);
 			}
 		}
@@ -198,6 +199,11 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 			
 		}
 		if(e.getSource() == export) {
+			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {				
+				File f = fs.getSelectedFile();
+				export(f);
+			}
+
 		}
 	}
 	
@@ -221,10 +227,10 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 		catch(ClassNotFoundException exc) {System.out.println("Error 2");}
 	}
 	public void export(File f) {
-		ArrayList<CommandBlock> program = new ArrayList<CommandBlock>();
+		ArrayList<Command> program = new ArrayList<Command>();
 		for(CommandBlock c: commands) {
 			if(c.isSnapped())
-				program.add(c);
+				program.add(c.getCommand());
 		}
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream (f));
