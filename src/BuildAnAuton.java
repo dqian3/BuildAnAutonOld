@@ -3,6 +3,7 @@ import java.awt.geom.Line2D;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
 import java.io.File;
@@ -164,8 +165,11 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 		x.setSize(500, 500);
 		x.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		x.setVisible(true);
-		x.open(new File(args[0]));
-		System.out.println(args[0]);
+		if(args.length != 0) {
+			x.open(new File(args[0]));
+		}
+		Robot r = new Robot();
+		r.chooseProgram();
 	}
 	
 	public void place(int f) {
@@ -186,12 +190,16 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == save) {
+			FileNameExtensionFilter fil = new FileNameExtensionFilter("Auton", "aut");
+			fs.setFileFilter(fil);
 			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {				
 				File f = fs.getSelectedFile();
 				save(f);
 			}
 		}
 		if(e.getSource() == load) {
+			FileNameExtensionFilter fil = new FileNameExtensionFilter("Auton", "aut");
+			fs.setFileFilter(fil);
 			if(fs.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 				File f = fs.getSelectedFile();
 				open(f);
@@ -199,6 +207,8 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 			
 		}
 		if(e.getSource() == export) {
+			FileNameExtensionFilter fil = new FileNameExtensionFilter("Program", "autr");
+			fs.setFileFilter(fil);
 			if(fs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {				
 				File f = fs.getSelectedFile();
 				export(f);
@@ -219,6 +229,7 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 	}
 	public void open(File f) {
 		try {
+			System.out.println(f.getPath());
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 			commands = (ArrayList<CommandBlock>) ois.readObject();
 			ois.close();

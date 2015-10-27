@@ -15,6 +15,8 @@ import javax.swing.JComponent;
  * 
  */
 public class CommandBlock implements Serializable{
+	private static final long serialVersionUID = 874754578L;
+
 	private Rectangle hitbox; //Rectangle the contains all portions of the command block
 	private Color primCol; //Background Color
 	private Color secCol; //Text and Outline Color
