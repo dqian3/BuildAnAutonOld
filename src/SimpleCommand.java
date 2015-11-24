@@ -1,12 +1,8 @@
 import java.awt.*;
 import java.io.Serializable;
 import javax.swing.*;
-
 public class SimpleCommand implements Command {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1755440L;
+
 	private String message;
 			
     public SimpleCommand(String msg) {
@@ -32,3 +28,4 @@ public class SimpleCommand implements Command {
 	
 
 }
+
