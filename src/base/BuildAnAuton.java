@@ -56,15 +56,6 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 		
 		
 		buttons.add(add);
-		
-		add.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				commands.add(new CommandBlock(new SimpleCommand("Hello World"), Color.WHITE, Color.BLACK));
-				
-			}
-			
-		});
 
 		workArea.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
@@ -240,5 +231,13 @@ public class BuildAnAuton extends JFrame implements ActionListener {
 		}
 		catch(IOException exc){exc.printStackTrace();}
 
+	}
+	
+	public JButton getAddButton() {
+		return add;
+	}
+	
+	public void Add(CommandBlock c) {
+		commands.add(c);
 	}
 }
